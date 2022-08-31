@@ -20,5 +20,3 @@ jobs:
         run: isort proj1/ --check
       - name: Code Formatting Quality Check
         run: black proj1/ --check
-      - name: Code Checker
-        run: flake8 proj1/
