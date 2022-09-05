@@ -11,18 +11,18 @@ def homepage(request):
 def signin(request):
     if request.method == "POST":
         username = request.POST["username"]
-        password = request.POST['pass1']
+        password = request.POST["pass1"]
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
             fname = user.first_name
-            return render(request, "user_authentication/base.html", {'fname': fname})
+            return render(request, "user_authentication/base.html", {"fname": fname})
 
         else:
             messages.error(request, "Incorrect credentials Entered")
-            return redirect('homepage')
+            return redirect("homepage")
 
     return render(request, "user_authentication/signin.html")
 
@@ -30,7 +30,7 @@ def signin(request):
 def signout(request):
     logout(request)
     messages.success(request, "User logged out!")
-    return redirect('homepage')
+    return redirect("homepage")
 
 
 def signup(request):
@@ -43,19 +43,24 @@ def signup(request):
         pass2 = request.POST["pass2"]
         if pass1 == pass2:
             if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username is already taken!\n')
-                return redirect('signup')
+                messages.error(request, "Username is already taken!\n")
+                return redirect("signup")
             elif User.objects.filter(email=email).exists():
-                messages.error(request, 'Email already taken!')
-                return redirect('signup')
+                messages.error(request, "Email already taken!")
+                return redirect("signup")
             else:
-                user = User.objects.create_user(username=username, password=pass1, email=email,
-                                                first_name=fname, last_name=lname)
+                user = User.objects.create_user(
+                    username=username,
+                    password=pass1,
+                    email=email,
+                    first_name=fname,
+                    last_name=lname,
+                )
                 user.save()
                 messages.success(request, "Account Created Successfully!")
-                return redirect('signin')
+                return redirect("signin")
         else:
-            messages.error(request, 'password do not match! \n')
-            return redirect('signup')
+            messages.error(request, "password do not match! \n")
+            return redirect("signup")
     else:
         return render(request, "user_authentication/signup.html")
