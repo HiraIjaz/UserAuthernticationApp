@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+</head>
+<body>
+        {%  for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message:</strong> {{ message }}
+        </div>
+        {% endfor %}
+<h3> Sign In</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+          <label for="Username">User Name:</label>
+        <label for="username"></label><input type="text" id="username" name="username" placeholder="create a username" required>
+        <br><br>
+            <label for="pass1">Password: </label><br>
+          <input type="password"  id="pass1" name="pass1" placeholder="create password" required><br><br>
+
+
+            <button type="submit">sign in </button>
+    </form>
+<div>
+
+</div>
+</body>
+</html>
