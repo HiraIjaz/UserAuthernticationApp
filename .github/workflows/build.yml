@@ -19,4 +19,4 @@ jobs:
       - name: Isort Checker
         run: isort django_project/ --check
       - name: Code Formatting Quality Check
-        run: black djnago_project/ --check
+        run: black django_project/ --check
