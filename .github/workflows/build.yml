@@ -17,6 +17,6 @@ jobs:
       - name: Install requirements # install application requirements
         run: pip install -r requirements.txt
       - name: Isort Checker
-        run: isort proj1/ --check
+        run: isort django_project/ --check
       - name: Code Formatting Quality Check
-        run: black proj1/ --check
+        run: black djnago_project/ --check
