@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
+{% extends 'user_authentication/basetemplate.html' %}
+<style>
+      .center {margin: auto;
+  width: 75%;
+  padding: 10px;
+
+}
+</style>
+{% block content %}
+
 <body>
+
     {%  for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
             <strong>Message:</strong> {{ message }}
         </div>
         {% endfor %}
-<h3>Welcome to HomePage </h3><br><br>
+  <div class="center">
+        <h3>Welcome to HomePage </h3><br>
+
     <button type="submit"><a href="{% url 'signup' %}">SignUp</a> </button>
     <button type="submit"><a href="{% url 'signin' %}">SignIn</a></button>
     <button type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
+  </div>
 </body>
-</html>
+
+{% endblock %}

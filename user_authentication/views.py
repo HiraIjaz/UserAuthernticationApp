@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -18,7 +19,7 @@ def signin(request):
         if user is not None:
             login(request, user)
             fname = user.first_name
-            return render(request, "user_authentication/base.html", {"fname": fname})
+            return render(request, "user_authentication/userbase.html", {"fname": fname})
 
         else:
             messages.error(request, "Incorrect credentials Entered")
@@ -64,3 +65,24 @@ def signup(request):
             return redirect("signup")
     else:
         return render(request, "user_authentication/signup.html")
+
+
+
+def updateprofile(request):
+
+    if request.method == "POST":
+        newemail = request.POST.get("newemail")
+        newfname = request.POST.get("newfname")
+        newlname = request.POST.get("newlname")
+
+        myuser = request.user
+        myuser.email = newemail
+        myuser.first_name = newfname
+        myuser.last_name = newlname
+        myuser.save()
+
+    current_user = request.user
+    return render(request, "user_authentication/updateprofile.html", {"username": current_user.username,
+                                                                      "fname": current_user.first_name,
+                                                                      "lname": current_user.last_name,
+                                                                      "email": current_user.email})

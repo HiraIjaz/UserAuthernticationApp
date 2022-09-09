@@ -1,0 +1,23 @@
+<style>
+      .center {margin: auto;
+  width: 25%;
+  padding: 10px;
+
+}
+</style>
+<div class="center">
+<h1>User Authentication App</h1>
+</div>
+<button type="submit" aling="right"><a href="{% url 'homepage' %}">Home</a></button>
+<button type="submit" aling="right"><a href="{% url 'signout' %}">SignOut</a></button>
+
+ <hr><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+{% block content %}
+{% endblock %}
