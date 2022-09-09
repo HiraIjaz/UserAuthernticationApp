@@ -1,4 +1,5 @@
 {% extends 'user_authentication/basetemplate.html' %}
+{% load custom_tags %}
     {% block content %}
         <body>
 
@@ -8,7 +9,7 @@
                 </div>
                 {% endfor %}
                 {% if user.is_authenticated %}
-                <h3>hello {{fname}}, You Have Successfully Logged In !!!!</h3>
+                <h3>hello {{fname|upper}}, You Have Successfully Logged In !!!!</h3>
                     <button type="submit"><a href="{% url 'updateprofile' %}">update Profile</a></button>
                     <button type="submit"><a href="{% url 'signout' %}">SignOut</a></button>
 
