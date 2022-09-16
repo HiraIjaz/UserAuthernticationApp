@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
+from .forms import UpdateUserForm, Registeruser
 
 
 def homepage(request):
@@ -35,53 +37,30 @@ def signout(request):
 
 def signup(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        lname = request.POST["lname"]
-        fname = request.POST["fname"]
-        email = request.POST["email"]
-        pass1 = request.POST["pass1"]
-        pass2 = request.POST["pass2"]
-        if pass1 == pass2:
-            if User.objects.filter(username=username).exists():
-                messages.error(request, "Username is already taken!\n")
-                return redirect("signup")
-            elif User.objects.filter(email=email).exists():
-                messages.error(request, "Email already taken!")
-                return redirect("signup")
-            else:
-                user = User.objects.create_user(
-                    username=username,
-                    password=pass1,
-                    email=email,
-                    first_name=fname,
-                    last_name=lname,
-                )
-                user.save()
-                messages.success(request, "Account Created Successfully!")
-                return redirect("signin")
-        else:
-            messages.error(request, "password do not match! \n")
-            return redirect("signup")
+        form = Registeruser(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, 'Account created successfully!')
+            return redirect('signin')
     else:
-        return render(request, "user_authentication/signup.html")
+        form = Registeruser()
+
+    return render(request, 'user_authentication/signup.html', {'form': form})
 
 
-
+@login_required
 def updateprofile(request):
+    user = request.user
+    print(user.username)
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=user)
 
-    if request.method == "POST":
-        newemail = request.POST.get("newemail")
-        newfname = request.POST.get("newfname")
-        newlname = request.POST.get("newlname")
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile is updated successfully!')
+            return redirect("updateprofile")
+    else:
+        form = UpdateUserForm()
 
-        myuser = request.user
-        myuser.email = newemail
-        myuser.first_name = newfname
-        myuser.last_name = newlname
-        myuser.save()
-
-    current_user = request.user
-    return render(request, "user_authentication/updateprofile.html", {"username": current_user.username,
-                                                                      "fname": current_user.first_name,
-                                                                      "lname": current_user.last_name,
-                                                                      "email": current_user.email})
+    return render(request, 'user_authentication/updateprofile.html', {'form': form})

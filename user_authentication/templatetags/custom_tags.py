@@ -4,7 +4,8 @@ register = template.Library()
 
 
 def upper(value):
-    return value.upper()
+    value = value[0].upper()+value[1::]
+    return value
 
 
 register.filter('upper', upper)

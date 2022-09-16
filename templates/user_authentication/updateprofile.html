@@ -1,4 +1,5 @@
 {% extends 'user_authentication/basetemplate.html' %}
+ {% load crispy_forms_tags %}
 <style>
       .center {margin: auto;
   width: 25%;
@@ -7,26 +8,22 @@
 }
 </style>
 {% block content %}
+    <button onclick="history.back()">back</button>
     <h3 class="center">Update Profile</h3>
     {%  for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     <strong>Message:</strong> {{ message }}
                 </div>
-    {% endfor %}
-    <form method="post" class="center">
+            {% endfor %}
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        {{ form.as_p}}
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value={{ user.first_name }} ><br>
+         <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value={{ user.last_name }} ><br>
+         <label for="email">New Email:</label>
+        <input type="email" id="email" name="email" value={{ user.email }} ><br>
 
-                <label for="username">User Name:</label>
-                <input type="text" id="username" name="username" value= {{ username }} readonly required ><br><br>
-                <label for="newfname">First name:</label>
-                <input type="text" id="newfname" name="newfname" value={{ fname }} required><br><br>
-                <label for="newlname">Last name:</label>
-                <input type="text" id="newlname" name="newlname" value={{ lname }}  required ><br><br>
-                <label for="newemail">Enter New Email:</label>
-                <input type="email" id="newemail" name="newemail" value={{ email }} ><br><br>
-
-                <button type="submit">Update Profile </button>
-
+        <button type="submit">Update Profile </button>
     </form>
 {% endblock %}

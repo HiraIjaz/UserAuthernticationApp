@@ -1,10 +1,10 @@
 {% extends 'user_authentication/basetemplate.html' %}
+{% load crispy_forms_tags %}
 <style>
       .center {margin: auto;
   width: 25%;
   padding: 10px;
-          border: 3px gray;
-          padding: 10px;
+
 
 }
 </style>
@@ -18,29 +18,15 @@
                 </div>
             {% endfor %}
             <div class="center">
-        <h3> Sign Up</h3></div>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p}}
-                  <label for="username">User Name:</label>
-                  <input type="text" id="username" name="username" placeholder="create a username" required><br><br>
-                  <label for="fname">First name:</label>
-                  <input type="text" id="fname" name="fname" value=" " required><br><br>
-                  <label for="lname">Last name:</label>
-                  <input type="text" id="lname" name="lname" value=" " required><br><br>
-                    <label for="email">Email:</label>
-                  <input type="email" id="email" name="email" placeholder="__@__.com" required><br><br>
-
-                   <label for="pass1">Password: </label>
-                  <input type="password"  id="pass1" name="pass1" placeholder="create password" required><br><br>
-                    <label for="pass2">Password: </label>
-                  <input type="password" id="pass2" name="pass2" placeholder="confirm password " required><br><br>
-
-                    <div class="center">
-                        <button type="submit">create Account</button>
-                    </div>
-            </form>
-        <div>
+        <h2> Sign Up</h2>
+            </div>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div >
+                <button type="submit"><a href="{% url 'signin' %}">create Account</a></button>
+            </div>
+            <br> <label>Already have an account?</label> <a href="{% url 'signin' %}">signin</a>
+            <div>
 
         </div>
         </body>
