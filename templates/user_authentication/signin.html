@@ -8,6 +8,7 @@
 </style>
 
     {% block content %}
+        <button onclick="history.back()">back</button>
         <div class="center">
             <body>
                     {%  for message in messages %}
@@ -19,15 +20,17 @@
                 </div>
                 <form method="post">
                     {% csrf_token %}
-                        <label for="Username">User Name:</label>
-                        <input type="text" id="username" name="username" placeholder="enter username" required>
+                        <label for="username">User Name </label><input type="text" id="username" name="username" placeholder="enter username" required>
                         <br><br>
                         <label for="pass1">Password: </label>
                          <input type="password"  id="pass1" name="pass1" placeholder="enter password" required><br><br>
 
                         <div class="center">
-                        <button type="submit">sign in </button>
+                        <button type="submit">login </button>
                         </div>
+                        <label>Need An Account?</label>
+                        <button type="submit"><a href="{% url 'signup' %}">Sign Up Now</a> </button>
+
                 </form>
             </body>
         </div>

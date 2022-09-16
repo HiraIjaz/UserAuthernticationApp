@@ -1,4 +1,6 @@
 {% extends 'user_authentication/basetemplate.html' %}
     {% block content %}
         <h3>Sign Out</h3>
+        <label>Log In Again</label>
+        <button type="submit"><a href="{% url 'signin' %}">Login</a></button>
     {% endblock %}
